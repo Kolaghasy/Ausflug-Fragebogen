@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ausflug am 26.08.2026 – Kurzer Fragebogen</title>
+  <style>
+    :root { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    body { margin:0; background:#f4f6f7; color:#1f2933; }
+    main { max-width:720px; margin:0 auto; padding:20px 14px 40px; }
+    .card { background:#fff; border-radius:16px; padding:18px; margin:0 0 14px; box-shadow:0 1px 5px rgba(0,0,0,.08); }
+    h1 { font-size:1.5rem; line-height:1.2; margin:.2rem 0 .4rem; }
+    .lead { font-size:1rem; line-height:1.45; margin:.2rem 0; }
+    fieldset { border:0; padding:0; margin:0; }
+    legend { font-weight:700; font-size:1.08rem; margin-bottom:10px; line-height:1.35; }
+    label.option { display:flex; gap:10px; align-items:flex-start; padding:9px 0; font-size:1.05rem; }
+    input[type="checkbox"], input[type="radio"] { width:22px; height:22px; margin-top:1px; flex:0 0 auto; }
+    input[type="text"], textarea { width:100%; box-sizing:border-box; font-size:1rem; padding:12px; border:1px solid #b9c2c9; border-radius:10px; margin-top:8px; }
+    textarea { min-height:88px; resize:vertical; }
+    .small { font-size:.9rem; color:#52606d; }
+    button { width:100%; border:0; border-radius:12px; padding:15px 18px; font-size:1.1rem; font-weight:700; cursor:pointer; background:#1f6f5f; color:white; }
+    button:disabled { opacity:.6; cursor:default; }
+    .privacy { font-size:.92rem; line-height:1.45; }
+    .status { display:none; border-radius:12px; padding:14px; margin:0 0 14px; font-size:1rem; }
+    .status.ok { display:block; background:#e1f3ea; color:#0f5132; }
+    .status.err { display:block; background:#fbeaea; color:#8a1f1f; }
+  </style>
+</head>
+<body>
+<main>
+  <section class="card">
+    <h1>Ausflug am 26.08.2026</h1>
+    <p class="lead"><strong>Kurzer Fragebogen für Mütter mit Kindern</strong></p>
+    <p class="lead">Wir möchten unsere Angebote verbessern. Du kannst uns helfen, indem du folgende Fragen kurz und spontan beantwortest. Vielen Dank.</p>
+  </section>
+
+  <div id="statusOk" class="status ok">Danke! Deine Antworten wurden verschickt.</div>
+  <div id="statusErr" class="status err">Es gab ein Problem beim Senden. Bitte versuch es noch einmal.</div>
+
+  <form id="fragebogen" method="post" accept-charset="UTF-8">
+    <input type="hidden" name="access_key" value="493089ac-5544-4f8e-814c-92dda388df05">
+    <input type="hidden" name="subject" value="Neue Antwort: Fragebogen Ausflug 26.08.2026">
+    <input type="hidden" name="from_name" value="Fragebogen Ausflug">
+    <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+    <section class="card">
+      <fieldset>
+        <legend>1. Was habt ihr in diesen Sommerferien oft gemacht?</legend>
+        <label class="option"><input type="checkbox" name="q1[]" value="zu Hause"> zu Hause</label>
+        <label class="option"><input type="checkbox" name="q1[]" value="Spielplatz"> Spielplatz</label>
+        <label class="option"><input type="checkbox" name="q1[]" value="Freunde / Familie besucht"> Freunde / Familie besucht</label>
+        <label class="option"><input type="checkbox" name="q1[]" value="schwimmen / See"> schwimmen / See</label>
+        <label class="option"><input type="checkbox" name="q1[]" value="Ausflüge"> Ausflüge</label>
+        <label class="option"><input type="checkbox" name="q1[]" value="Reise / Urlaub"> Reise / Urlaub</label>
+        <label class="option"><input type="checkbox" name="q1[]" value="organisierte Angebote"> organisierte Angebote</label>
+        <label class="option"><input type="checkbox" name="q1[]" value="etwas anderes"> etwas anderes</label>
+        <input type="text" name="q1_other" placeholder="Was?">
+      </fieldset>
+    </section>
+
+    <section class="card"><fieldset>
+      <legend>2. Waren deine Kinder in den Ferien in der Sommerbetreuung (Schule, Kindergarten)?</legend>
+      <label class="option"><input type="radio" name="q2" value="Ja, 4-5 mal pro Woche"> Ja, 4–5 mal pro Woche</label>
+      <label class="option"><input type="radio" name="q2" value="Ja, 1-3 mal pro Woche"> Ja, 1–3 mal pro Woche</label>
+      <label class="option"><input type="radio" name="q2" value="Nein"> Nein</label>
+    </fieldset></section>
+
+    <section class="card"><fieldset>
+      <legend>3. Gehen deine Schulkinder ab nächster Woche in die Sommerschule?</legend>
+      <label class="option"><input type="radio" name="q3" value="Ja"> Ja</label>
+      <label class="option"><input type="radio" name="q3" value="Nein"> Nein</label>
+      <label class="option"><input type="radio" name="q3" value="Manche meiner Kinder"> Manche meiner Kinder</label>
+    </fieldset></section>
+
+    <section class="card"><fieldset>
+      <legend>4. Gab es Tage, an denen du gerne etwas mit deinen Kindern gemacht hättest, aber ihr seid zu Hause geblieben?</legend>
+      <label class="option"><input type="radio" name="q4" value="Ja"> Ja</label>
+      <label class="option"><input type="radio" name="q4" value="Nein"> Nein</label>
+      <textarea name="q4_why" placeholder="Wenn ja: Warum?"></textarea>
+    </fieldset></section>
+
+    <section class="card"><fieldset>
+      <legend>5. Hat dich die Hitze an Aktivitäten im Freien gestört?</legend>
+      <label class="option"><input type="radio" name="q5" value="Ja"> Ja</label>
+      <label class="option"><input type="radio" name="q5" value="Nein"> Nein</label>
+    </fieldset></section>
+
+    <section class="card"><fieldset>
+      <legend>6. Warst du wegen der Hitze öfters abends/nachts unterwegs mit den Kindern?</legend>
+      <label class="option"><input type="radio" name="q6" value="Ja"> Ja</label>
+      <label class="option"><input type="radio" name="q6" value="Nein"> Nein</label>
+    </fieldset></section>
+
+    <section class="card"><fieldset>
+      <legend>7. Hast du in diesen Ferien selbst einen Ausflug mit deinen Kindern organisiert?</legend>
+      <label class="option"><input type="radio" name="q7" value="Ja"> Ja</label>
+      <label class="option"><input type="radio" name="q7" value="Nein"> Nein</label>
+      <input type="text" name="q7_where" placeholder="Wenn ja: Wohin?">
+    </fieldset></section>
+
+    <section class="card"><fieldset>
+      <legend>8. Warum bist du heute bei unserem Ausflug dabei?</legend>
+      <textarea name="q8" placeholder="Mein wichtigster Grund"></textarea>
+    </fieldset></section>
+
+    <section class="card"><fieldset>
+      <legend>9. Wenn wir dir einen schönen Ort zeigen und erklären, wie du hinkommst: Gehst du später selbst mit deinen Kindern noch einmal dorthin?</legend>
+      <label class="option"><input type="radio" name="q9" value="Ja"> Ja</label>
+      <label class="option"><input type="radio" name="q9" value="Nein"> Nein</label>
+      <textarea name="q9_why" placeholder="Wenn nein: Warum nicht?"></textarea>
+    </fieldset></section>
+
+    <section class="card privacy">
+      <strong>Hinweis zum Datenschutz</strong>
+      <p>Dieser Fragebogen fragt nicht nach Name, E-Mail-Adresse oder Telefonnummer. Die Antworten werden über einen E-Mail-Versanddienst (Web3Forms) an Regio Vorderland-Feldkirch übermittelt. Bitte keine persönlichen Daten in die freien Textfelder schreiben, wenn du anonym bleiben möchtest.</p>
+    </section>
+
+    <section class="card">
+      <button type="submit" id="sendBtn">Antworten absenden</button>
+    </section>
+  </form>
+</main>
+<script>
+  const form = document.getElementById('fragebogen');
+  const btn = document.getElementById('sendBtn');
+  const ok = document.getElementById('statusOk');
+  const err = document.getElementById('statusErr');
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    ok.style.display = 'none';
+    err.style.display = 'none';
+    btn.disabled = true;
+    btn.textContent = 'Wird gesendet …';
+
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(form)
+      });
+      const data = await res.json();
+      if (data.success) {
+        ok.style.display = 'block';
+        form.reset();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        throw new Error(data.message || 'Fehler');
+      }
+    } catch (e2) {
+      err.style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Antworten absenden';
+    }
+  });
+</script>
+</body>
+</html>
