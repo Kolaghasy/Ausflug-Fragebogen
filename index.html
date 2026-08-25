@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Ausflug am 26.08.2026 – Kurzer Fragebogen</title>
+  <title>Ausflug am 26.08.2026 – Fragebogen</title>
   <style>
     :root { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
     body { margin:0; background:#f4f6f7; color:#1f2933; }
@@ -18,142 +18,910 @@
     input[type="text"], textarea { width:100%; box-sizing:border-box; font-size:1rem; padding:12px; border:1px solid #b9c2c9; border-radius:10px; margin-top:8px; }
     textarea { min-height:88px; resize:vertical; }
     .small { font-size:.9rem; color:#52606d; }
-    button { width:100%; border:0; border-radius:12px; padding:15px 18px; font-size:1.1rem; font-weight:700; cursor:pointer; background:#1f6f5f; color:white; }
-    button:disabled { opacity:.6; cursor:default; }
+    button.sendBtn { width:100%; border:0; border-radius:12px; padding:15px 18px; font-size:1.1rem; font-weight:700; cursor:pointer; background:#1f6f5f; color:white; }
+    button.sendBtn:disabled { opacity:.6; cursor:default; }
     .privacy { font-size:.92rem; line-height:1.45; }
     .status { display:none; border-radius:12px; padding:14px; margin:0 0 14px; font-size:1rem; }
     .status.show { display:block; }
     .status.ok { background:#e1f3ea; color:#0f5132; }
     .status.err { background:#fbeaea; color:#8a1f1f; }
+    .backlink { background:none; border:0; color:#1f6f5f; font-weight:700; font-size:.95rem; padding:0 0 10px; cursor:pointer; }
+
+    /* Language selection screen */
+    #langSelect .card { text-align:center; }
+    .langGrid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .langBtn { padding:16px 10px; font-size:1.1rem; font-weight:700; border-radius:12px; border:1px solid #b9c2c9; background:#fff; color:#1f2933; cursor:pointer; }
+    .langBtn:active { background:#e1f3ea; border-color:#1f6f5f; }
   </style>
 </head>
 <body>
 <main>
-  <section class="card">
-    <h1>Ausflug am 26.08.2026</h1>
-    <p class="lead"><strong>Kurzer Fragebogen für Mütter mit Kindern</strong></p>
-    <p class="lead">Wir möchten unsere Angebote verbessern. Du kannst uns helfen, indem du folgende Fragen kurz und spontan beantwortest. Vielen Dank.</p>
+  <section id="langSelect">
+    <section class="card">
+      <h1>Sprache auswählen<br>Choose your language</h1>
+      <p class="lead">Bitte wähle deine Sprache. / Please choose your language.</p>
+    </section>
+    <section class="card">
+      <div class="langGrid">
+        <button type="button" class="langBtn" onclick="showLang('ar')">العربية</button>
+<button type="button" class="langBtn" onclick="showLang('fa')">دری/فارسی</button>
+<button type="button" class="langBtn" onclick="showLang('en')">English</button>
+<button type="button" class="langBtn" onclick="showLang('de')">Deutsch</button>
+<button type="button" class="langBtn" onclick="showLang('ps')">پښتو</button>
+<button type="button" class="langBtn" onclick="showLang('ru')">Русский</button>
+<button type="button" class="langBtn" onclick="showLang('so')">Soomaali</button>
+<button type="button" class="langBtn" onclick="showLang('uk')">Українська</button>
+
+      </div>
+    </section>
   </section>
 
-  <div id="statusOk" class="status ok">Danke! Deine Antworten wurden verschickt.</div>
-  <div id="statusErr" class="status err">Es gab ein Problem beim Senden. Bitte versuch es noch einmal.</div>
-
-  <form id="fragebogen" method="post" accept-charset="UTF-8">
-    <input type="hidden" name="access_key" value="493089ac-5544-4f8e-814c-92dda388df05">
-    <input type="hidden" name="subject" value="Neue Antwort: Fragebogen Ausflug 26.08.2026">
-    <input type="hidden" name="from_name" value="Fragebogen Ausflug">
-    <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+  
+  <section class="lang-form" id="form-ar" dir="rtl" style="display:none">
     <section class="card">
-      <fieldset>
+      <button type="button" class="backlink" onclick="showLangSelect()">← تغيير اللغة</button>
+      <h1>الرحلة بتاريخ 26.08.2026</h1>
+      <p class="lead"><strong>استبيان قصير للأمهات مع أطفالهن</strong></p>
+      <p class="lead">نريد تحسين خدماتنا. يمكنك مساعدتنا من خلال الإجابة على الأسئلة التالية بإيجاز وعفوية. شكراً جزيلاً.</p>
+    </section>
+
+    <div class="status ok">شكراً! تم إرسال إجاباتك.</div>
+    <div class="status err">حدثت مشكلة أثناء الإرسال. يرجى المحاولة مرة أخرى.</div>
+
+    <form class="fragebogen" method="post" accept-charset="UTF-8">
+      <input type="hidden" name="access_key" value="493089ac-5544-4f8e-814c-92dda388df05">
+      <input type="hidden" name="subject" value="Neue Antwort: Fragebogen Ausflug 26.08.2026">
+      <input type="hidden" name="from_name" value="Fragebogen Ausflug">
+      <input type="hidden" name="0_Sprache_gewaehlt" value="Arabisch">
+      <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+
+      <section class="card"><fieldset>
+        <legend>١. ماذا فعلتم كثيراً خلال عطلة الصيف هذه؟</legend>
+        <label class="option" for="ar_q1_opt_home"><input type="checkbox" id="ar_q1_opt_home" name="1_Aktivitaeten_Sommerferien[]" value="في المنزل"> في المنزل</label>
+<label class="option" for="ar_q1_opt_playground"><input type="checkbox" id="ar_q1_opt_playground" name="1_Aktivitaeten_Sommerferien[]" value="ملعب الأطفال"> ملعب الأطفال</label>
+<label class="option" for="ar_q1_opt_friends"><input type="checkbox" id="ar_q1_opt_friends" name="1_Aktivitaeten_Sommerferien[]" value="زيارة الأصدقاء / العائلة"> زيارة الأصدقاء / العائلة</label>
+<label class="option" for="ar_q1_opt_swim"><input type="checkbox" id="ar_q1_opt_swim" name="1_Aktivitaeten_Sommerferien[]" value="السباحة / البحيرة"> السباحة / البحيرة</label>
+<label class="option" for="ar_q1_opt_trips"><input type="checkbox" id="ar_q1_opt_trips" name="1_Aktivitaeten_Sommerferien[]" value="رحلات"> رحلات</label>
+<label class="option" for="ar_q1_opt_travel"><input type="checkbox" id="ar_q1_opt_travel" name="1_Aktivitaeten_Sommerferien[]" value="سفر / إجازة"> سفر / إجازة</label>
+<label class="option" for="ar_q1_opt_organized"><input type="checkbox" id="ar_q1_opt_organized" name="1_Aktivitaeten_Sommerferien[]" value="أنشطة منظمة"> أنشطة منظمة</label>
+<label class="option" for="ar_q1_opt_other"><input type="checkbox" id="ar_q1_opt_other" name="1_Aktivitaeten_Sommerferien[]" value="شيء آخر"> شيء آخر</label>
+
+        <input type="text" name="1_Sonstiges" placeholder="ما هو؟">
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>٢. هل كان أطفالك في رعاية صيفية (مدرسة، روضة) خلال العطلة؟</legend>
+        <label class="option" for="ar_q2_q2_a"><input type="radio" id="ar_q2_q2_a" name="2_Sommerbetreuung" value="نعم، 4-5 مرات أسبوعياً"> نعم، 4-5 مرات أسبوعياً</label>
+<label class="option" for="ar_q2_q2_b"><input type="radio" id="ar_q2_q2_b" name="2_Sommerbetreuung" value="نعم، 1-3 مرات أسبوعياً"> نعم، 1-3 مرات أسبوعياً</label>
+<label class="option" for="ar_q2_common_no"><input type="radio" id="ar_q2_common_no" name="2_Sommerbetreuung" value="لا"> لا</label>
+
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>٣. هل سيلتحق أطفالك في سن المدرسة بالمدرسة الصيفية اعتباراً من الأسبوع القادم؟</legend>
+        <label class="option" for="ar_q3_common_yes"><input type="radio" id="ar_q3_common_yes" name="3_Sommerschule" value="نعم"> نعم</label>
+<label class="option" for="ar_q3_common_no"><input type="radio" id="ar_q3_common_no" name="3_Sommerschule" value="لا"> لا</label>
+<label class="option" for="ar_q3_q3_some"><input type="radio" id="ar_q3_q3_some" name="3_Sommerschule" value="بعض أطفالي"> بعض أطفالي</label>
+
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>٤. هل كانت هناك أيام تمنيت فيها فعل شيء مع أطفالك، لكنكم بقيتم في المنزل؟</legend>
+        <label class="option" for="ar_q4_common_yes"><input type="radio" id="ar_q4_common_yes" name="4_Wunsch_aber_zuhause_geblieben" value="نعم"> نعم</label>
+<label class="option" for="ar_q4_common_no"><input type="radio" id="ar_q4_common_no" name="4_Wunsch_aber_zuhause_geblieben" value="لا"> لا</label>
+
+        <textarea name="4_Warum" placeholder="إذا كانت الإجابة نعم: لماذا؟"></textarea>
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>٥. هل أعاقت الحرارة الأنشطة في الهواء الطلق؟</legend>
+        <label class="option" for="ar_q5_common_yes"><input type="radio" id="ar_q5_common_yes" name="5_Hitze_gestoert" value="نعم"> نعم</label>
+<label class="option" for="ar_q5_common_no"><input type="radio" id="ar_q5_common_no" name="5_Hitze_gestoert" value="لا"> لا</label>
+
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>٦. بسبب الحرارة، هل خرجتِ مع أطفالك مساءً/ليلاً أكثر من المعتاد؟</legend>
+        <label class="option" for="ar_q6_common_yes"><input type="radio" id="ar_q6_common_yes" name="6_Abends_nachts_unterwegs_wegen_Hitze" value="نعم"> نعم</label>
+<label class="option" for="ar_q6_common_no"><input type="radio" id="ar_q6_common_no" name="6_Abends_nachts_unterwegs_wegen_Hitze" value="لا"> لا</label>
+
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>٧. هل نظمتِ بنفسك رحلة مع أطفالك خلال هذه العطلة؟</legend>
+        <label class="option" for="ar_q7_common_yes"><input type="radio" id="ar_q7_common_yes" name="7_Selbst_Ausflug_organisiert" value="نعم"> نعم</label>
+<label class="option" for="ar_q7_common_no"><input type="radio" id="ar_q7_common_no" name="7_Selbst_Ausflug_organisiert" value="لا"> لا</label>
+
+        <input type="text" name="7_Wohin" placeholder="إذا كانت الإجابة نعم: إلى أين؟">
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>٨. لماذا تشاركين اليوم في رحلتنا؟</legend>
+        <textarea name="8_Warum_heute_dabei" placeholder="سببي الرئيسي"></textarea>
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>٩. إذا أرينا لك مكاناً جميلاً وشرحنا لك كيفية الوصول إليه: هل ستذهبين إلى هناك مرة أخرى بنفسك مع أطفالك لاحقاً؟</legend>
+        <label class="option" for="ar_q9_common_yes"><input type="radio" id="ar_q9_common_yes" name="9_Nochmal_hingehen" value="نعم"> نعم</label>
+<label class="option" for="ar_q9_common_no"><input type="radio" id="ar_q9_common_no" name="9_Nochmal_hingehen" value="لا"> لا</label>
+
+        <textarea name="9_Warum_nicht" placeholder="إذا كانت الإجابة لا: لماذا لا؟"></textarea>
+      </fieldset></section>
+
+      <section class="card privacy">
+        <strong>إشعار حول الخصوصية</strong>
+        <p>لا يسأل هذا الاستبيان عن اسمك أو بريدك الإلكتروني أو رقم هاتفك. تُرسل الإجابات عبر خدمة بريد إلكتروني إلى Regio Vorderland-Feldkirch. يرجى عدم كتابة بيانات شخصية في الحقول النصية الحرة إذا كنتِ ترغبين في البقاء مجهولة الهوية.</p>
+      </section>
+
+      <section class="card">
+        <button type="submit" class="sendBtn" data-send="جارٍ الإرسال …" data-submit="إرسال الإجابات">إرسال الإجابات</button>
+      </section>
+    </form>
+  </section>
+
+  <section class="lang-form" id="form-fa" dir="rtl" style="display:none">
+    <section class="card">
+      <button type="button" class="backlink" onclick="showLangSelect()">← تغییر زبان</button>
+      <h1>گشت‌وگذار به تاریخ ۲۶.۰۸.۲۰۲۶</h1>
+      <p class="lead"><strong>پرسشنامه کوتاه برای مادران دارای فرزند</strong></p>
+      <p class="lead">ما می‌خواهیم خدمات خود را بهتر کنیم. شما می‌توانید با پاسخ دادن کوتاه و صادقانه به سوالات زیر به ما کمک کنید. بسیار سپاسگزاریم.</p>
+    </section>
+
+    <div class="status ok">تشکر! پاسخ‌های شما ارسال شد.</div>
+    <div class="status err">مشکلی در ارسال به وجود آمد. لطفاً دوباره تلاش کنید.</div>
+
+    <form class="fragebogen" method="post" accept-charset="UTF-8">
+      <input type="hidden" name="access_key" value="493089ac-5544-4f8e-814c-92dda388df05">
+      <input type="hidden" name="subject" value="Neue Antwort: Fragebogen Ausflug 26.08.2026">
+      <input type="hidden" name="from_name" value="Fragebogen Ausflug">
+      <input type="hidden" name="0_Sprache_gewaehlt" value="Dari/Persisch">
+      <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+
+      <section class="card"><fieldset>
+        <legend>۱. در این تعطیلات تابستانی بیشتر چه کاری انجام دادید؟</legend>
+        <label class="option" for="fa_q1_opt_home"><input type="checkbox" id="fa_q1_opt_home" name="1_Aktivitaeten_Sommerferien[]" value="در خانه"> در خانه</label>
+<label class="option" for="fa_q1_opt_playground"><input type="checkbox" id="fa_q1_opt_playground" name="1_Aktivitaeten_Sommerferien[]" value="زمین بازی"> زمین بازی</label>
+<label class="option" for="fa_q1_opt_friends"><input type="checkbox" id="fa_q1_opt_friends" name="1_Aktivitaeten_Sommerferien[]" value="دیدار با دوستان / خانواده"> دیدار با دوستان / خانواده</label>
+<label class="option" for="fa_q1_opt_swim"><input type="checkbox" id="fa_q1_opt_swim" name="1_Aktivitaeten_Sommerferien[]" value="شنا / دریاچه"> شنا / دریاچه</label>
+<label class="option" for="fa_q1_opt_trips"><input type="checkbox" id="fa_q1_opt_trips" name="1_Aktivitaeten_Sommerferien[]" value="گشت‌وگذار"> گشت‌وگذار</label>
+<label class="option" for="fa_q1_opt_travel"><input type="checkbox" id="fa_q1_opt_travel" name="1_Aktivitaeten_Sommerferien[]" value="سفر / تعطیلات"> سفر / تعطیلات</label>
+<label class="option" for="fa_q1_opt_organized"><input type="checkbox" id="fa_q1_opt_organized" name="1_Aktivitaeten_Sommerferien[]" value="برنامه‌های سازمان‌یافته"> برنامه‌های سازمان‌یافته</label>
+<label class="option" for="fa_q1_opt_other"><input type="checkbox" id="fa_q1_opt_other" name="1_Aktivitaeten_Sommerferien[]" value="چیز دیگر"> چیز دیگر</label>
+
+        <input type="text" name="1_Sonstiges" placeholder="چه چیزی؟">
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>۲. آیا فرزندان‌تان در طول تعطیلات در مراقبت تابستانی (مکتب، کودکستان) بودند؟</legend>
+        <label class="option" for="fa_q2_q2_a"><input type="radio" id="fa_q2_q2_a" name="2_Sommerbetreuung" value="بله، ۴ تا ۵ بار در هفته"> بله، ۴ تا ۵ بار در هفته</label>
+<label class="option" for="fa_q2_q2_b"><input type="radio" id="fa_q2_q2_b" name="2_Sommerbetreuung" value="بله، ۱ تا ۳ بار در هفته"> بله، ۱ تا ۳ بار در هفته</label>
+<label class="option" for="fa_q2_common_no"><input type="radio" id="fa_q2_common_no" name="2_Sommerbetreuung" value="نخیر"> نخیر</label>
+
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>۳. آیا فرزندان مکتبی شما از هفته آینده به مکتب تابستانی می‌روند؟</legend>
+        <label class="option" for="fa_q3_common_yes"><input type="radio" id="fa_q3_common_yes" name="3_Sommerschule" value="بله"> بله</label>
+<label class="option" for="fa_q3_common_no"><input type="radio" id="fa_q3_common_no" name="3_Sommerschule" value="نخیر"> نخیر</label>
+<label class="option" for="fa_q3_q3_some"><input type="radio" id="fa_q3_q3_some" name="3_Sommerschule" value="بعضی از فرزندانم"> بعضی از فرزندانم</label>
+
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>۴. آیا روزهایی بود که دوست داشتید کاری با فرزندان‌تان انجام دهید، اما در خانه ماندید؟</legend>
+        <label class="option" for="fa_q4_common_yes"><input type="radio" id="fa_q4_common_yes" name="4_Wunsch_aber_zuhause_geblieben" value="بله"> بله</label>
+<label class="option" for="fa_q4_common_no"><input type="radio" id="fa_q4_common_no" name="4_Wunsch_aber_zuhause_geblieben" value="نخیر"> نخیر</label>
+
+        <textarea name="4_Warum" placeholder="اگر بله: چرا؟"></textarea>
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>۵. آیا گرما مانع فعالیت‌های بیرون از خانه شد؟</legend>
+        <label class="option" for="fa_q5_common_yes"><input type="radio" id="fa_q5_common_yes" name="5_Hitze_gestoert" value="بله"> بله</label>
+<label class="option" for="fa_q5_common_no"><input type="radio" id="fa_q5_common_no" name="5_Hitze_gestoert" value="نخیر"> نخیر</label>
+
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>۶. آیا به دلیل گرما بیشتر شب‌ها با فرزندان‌تان بیرون می‌رفتید؟</legend>
+        <label class="option" for="fa_q6_common_yes"><input type="radio" id="fa_q6_common_yes" name="6_Abends_nachts_unterwegs_wegen_Hitze" value="بله"> بله</label>
+<label class="option" for="fa_q6_common_no"><input type="radio" id="fa_q6_common_no" name="6_Abends_nachts_unterwegs_wegen_Hitze" value="نخیر"> نخیر</label>
+
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>۷. آیا خودتان در این تعطیلات یک گشت‌وگذار با فرزندان‌تان ترتیب دادید؟</legend>
+        <label class="option" for="fa_q7_common_yes"><input type="radio" id="fa_q7_common_yes" name="7_Selbst_Ausflug_organisiert" value="بله"> بله</label>
+<label class="option" for="fa_q7_common_no"><input type="radio" id="fa_q7_common_no" name="7_Selbst_Ausflug_organisiert" value="نخیر"> نخیر</label>
+
+        <input type="text" name="7_Wohin" placeholder="اگر بله: به کجا؟">
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>۸. چرا امروز در گشت‌وگذار ما شرکت کرده‌اید؟</legend>
+        <textarea name="8_Warum_heute_dabei" placeholder="مهم‌ترین دلیل من"></textarea>
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>۹. اگر ما یک جای زیبا را به شما نشان دهیم و توضیح دهیم چگونه به آنجا برسید: آیا بعداً خودتان با فرزندان‌تان دوباره به آنجا می‌روید؟</legend>
+        <label class="option" for="fa_q9_common_yes"><input type="radio" id="fa_q9_common_yes" name="9_Nochmal_hingehen" value="بله"> بله</label>
+<label class="option" for="fa_q9_common_no"><input type="radio" id="fa_q9_common_no" name="9_Nochmal_hingehen" value="نخیر"> نخیر</label>
+
+        <textarea name="9_Warum_nicht" placeholder="اگر نخیر: چرا نه؟"></textarea>
+      </fieldset></section>
+
+      <section class="card privacy">
+        <strong>اطلاعیه حریم خصوصی</strong>
+        <p>این پرسشنامه نام، ایمیل یا شماره تلفن شما را نمی‌پرسد. پاسخ‌ها از طریق یک سرویس ایمیل به Regio Vorderland-Feldkirch ارسال می‌شوند. لطفاً اگر می‌خواهید ناشناس بمانید، اطلاعات شخصی را در بخش‌های متنی آزاد ننویسید.</p>
+      </section>
+
+      <section class="card">
+        <button type="submit" class="sendBtn" data-send="در حال ارسال …" data-submit="ارسال پاسخ‌ها">ارسال پاسخ‌ها</button>
+      </section>
+    </form>
+  </section>
+
+  <section class="lang-form" id="form-en" dir="ltr" style="display:none">
+    <section class="card">
+      <button type="button" class="backlink" onclick="showLangSelect()">← Change language</button>
+      <h1>Outing on 26.08.2026</h1>
+      <p class="lead"><strong>Short questionnaire for mothers with children</strong></p>
+      <p class="lead">We want to improve our services. You can help us by answering the following questions briefly and spontaneously. Thank you very much.</p>
+    </section>
+
+    <div class="status ok">Thank you! Your answers have been sent.</div>
+    <div class="status err">There was a problem sending this. Please try again.</div>
+
+    <form class="fragebogen" method="post" accept-charset="UTF-8">
+      <input type="hidden" name="access_key" value="493089ac-5544-4f8e-814c-92dda388df05">
+      <input type="hidden" name="subject" value="Neue Antwort: Fragebogen Ausflug 26.08.2026">
+      <input type="hidden" name="from_name" value="Fragebogen Ausflug">
+      <input type="hidden" name="0_Sprache_gewaehlt" value="Englisch">
+      <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+
+      <section class="card"><fieldset>
+        <legend>1. What did you often do this summer holiday?</legend>
+        <label class="option" for="en_q1_opt_home"><input type="checkbox" id="en_q1_opt_home" name="1_Aktivitaeten_Sommerferien[]" value="at home"> at home</label>
+<label class="option" for="en_q1_opt_playground"><input type="checkbox" id="en_q1_opt_playground" name="1_Aktivitaeten_Sommerferien[]" value="playground"> playground</label>
+<label class="option" for="en_q1_opt_friends"><input type="checkbox" id="en_q1_opt_friends" name="1_Aktivitaeten_Sommerferien[]" value="visited friends / family"> visited friends / family</label>
+<label class="option" for="en_q1_opt_swim"><input type="checkbox" id="en_q1_opt_swim" name="1_Aktivitaeten_Sommerferien[]" value="swimming / lake"> swimming / lake</label>
+<label class="option" for="en_q1_opt_trips"><input type="checkbox" id="en_q1_opt_trips" name="1_Aktivitaeten_Sommerferien[]" value="outings"> outings</label>
+<label class="option" for="en_q1_opt_travel"><input type="checkbox" id="en_q1_opt_travel" name="1_Aktivitaeten_Sommerferien[]" value="trip / vacation"> trip / vacation</label>
+<label class="option" for="en_q1_opt_organized"><input type="checkbox" id="en_q1_opt_organized" name="1_Aktivitaeten_Sommerferien[]" value="organized activities"> organized activities</label>
+<label class="option" for="en_q1_opt_other"><input type="checkbox" id="en_q1_opt_other" name="1_Aktivitaeten_Sommerferien[]" value="something else"> something else</label>
+
+        <input type="text" name="1_Sonstiges" placeholder="What?">
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>2. Were your children in summer childcare (school, kindergarten) during the holidays?</legend>
+        <label class="option" for="en_q2_q2_a"><input type="radio" id="en_q2_q2_a" name="2_Sommerbetreuung" value="Yes, 4–5 times a week"> Yes, 4–5 times a week</label>
+<label class="option" for="en_q2_q2_b"><input type="radio" id="en_q2_q2_b" name="2_Sommerbetreuung" value="Yes, 1–3 times a week"> Yes, 1–3 times a week</label>
+<label class="option" for="en_q2_common_no"><input type="radio" id="en_q2_common_no" name="2_Sommerbetreuung" value="No"> No</label>
+
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>3. Will your school-age children start summer school next week?</legend>
+        <label class="option" for="en_q3_common_yes"><input type="radio" id="en_q3_common_yes" name="3_Sommerschule" value="Yes"> Yes</label>
+<label class="option" for="en_q3_common_no"><input type="radio" id="en_q3_common_no" name="3_Sommerschule" value="No"> No</label>
+<label class="option" for="en_q3_q3_some"><input type="radio" id="en_q3_q3_some" name="3_Sommerschule" value="Some of my children"> Some of my children</label>
+
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>4. Were there days when you would have liked to do something with your children, but stayed home instead?</legend>
+        <label class="option" for="en_q4_common_yes"><input type="radio" id="en_q4_common_yes" name="4_Wunsch_aber_zuhause_geblieben" value="Yes"> Yes</label>
+<label class="option" for="en_q4_common_no"><input type="radio" id="en_q4_common_no" name="4_Wunsch_aber_zuhause_geblieben" value="No"> No</label>
+
+        <textarea name="4_Warum" placeholder="If yes: why?"></textarea>
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>5. Did the heat get in the way of outdoor activities?</legend>
+        <label class="option" for="en_q5_common_yes"><input type="radio" id="en_q5_common_yes" name="5_Hitze_gestoert" value="Yes"> Yes</label>
+<label class="option" for="en_q5_common_no"><input type="radio" id="en_q5_common_no" name="5_Hitze_gestoert" value="No"> No</label>
+
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>6. Because of the heat, were you out with your children more often in the evening/at night?</legend>
+        <label class="option" for="en_q6_common_yes"><input type="radio" id="en_q6_common_yes" name="6_Abends_nachts_unterwegs_wegen_Hitze" value="Yes"> Yes</label>
+<label class="option" for="en_q6_common_no"><input type="radio" id="en_q6_common_no" name="6_Abends_nachts_unterwegs_wegen_Hitze" value="No"> No</label>
+
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>7. Did you organize an outing with your children yourself this holiday?</legend>
+        <label class="option" for="en_q7_common_yes"><input type="radio" id="en_q7_common_yes" name="7_Selbst_Ausflug_organisiert" value="Yes"> Yes</label>
+<label class="option" for="en_q7_common_no"><input type="radio" id="en_q7_common_no" name="7_Selbst_Ausflug_organisiert" value="No"> No</label>
+
+        <input type="text" name="7_Wohin" placeholder="If yes: where to?">
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>8. Why are you joining our outing today?</legend>
+        <textarea name="8_Warum_heute_dabei" placeholder="My main reason"></textarea>
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>9. If we show you a nice place and explain how to get there, would you go there again later with your children on your own?</legend>
+        <label class="option" for="en_q9_common_yes"><input type="radio" id="en_q9_common_yes" name="9_Nochmal_hingehen" value="Yes"> Yes</label>
+<label class="option" for="en_q9_common_no"><input type="radio" id="en_q9_common_no" name="9_Nochmal_hingehen" value="No"> No</label>
+
+        <textarea name="9_Warum_nicht" placeholder="If no: why not?"></textarea>
+      </fieldset></section>
+
+      <section class="card privacy">
+        <strong>Privacy notice</strong>
+        <p>This questionnaire does not ask for your name, email address, or phone number. Answers are sent via an email delivery service to Regio Vorderland-Feldkirch. Please do not write personal information in the free text fields if you want to remain anonymous.</p>
+      </section>
+
+      <section class="card">
+        <button type="submit" class="sendBtn" data-send="Sending …" data-submit="Submit answers">Submit answers</button>
+      </section>
+    </form>
+  </section>
+
+  <section class="lang-form" id="form-de" dir="ltr" style="display:none">
+    <section class="card">
+      <button type="button" class="backlink" onclick="showLangSelect()">← Sprache wechseln</button>
+      <h1>Ausflug am 26.08.2026</h1>
+      <p class="lead"><strong>Kurzer Fragebogen für Mütter mit Kindern</strong></p>
+      <p class="lead">Wir möchten unsere Angebote verbessern. Du kannst uns helfen, indem du folgende Fragen kurz und spontan beantwortest. Vielen Dank.</p>
+    </section>
+
+    <div class="status ok">Danke! Deine Antworten wurden verschickt.</div>
+    <div class="status err">Es gab ein Problem beim Senden. Bitte versuch es noch einmal.</div>
+
+    <form class="fragebogen" method="post" accept-charset="UTF-8">
+      <input type="hidden" name="access_key" value="493089ac-5544-4f8e-814c-92dda388df05">
+      <input type="hidden" name="subject" value="Neue Antwort: Fragebogen Ausflug 26.08.2026">
+      <input type="hidden" name="from_name" value="Fragebogen Ausflug">
+      <input type="hidden" name="0_Sprache_gewaehlt" value="Deutsch">
+      <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+
+      <section class="card"><fieldset>
         <legend>1. Was habt ihr in diesen Sommerferien oft gemacht?</legend>
-        <label class="option"><input type="checkbox" name="q1[]" value="zu Hause"> zu Hause</label>
-        <label class="option"><input type="checkbox" name="q1[]" value="Spielplatz"> Spielplatz</label>
-        <label class="option"><input type="checkbox" name="q1[]" value="Freunde / Familie besucht"> Freunde / Familie besucht</label>
-        <label class="option"><input type="checkbox" name="q1[]" value="schwimmen / See"> schwimmen / See</label>
-        <label class="option"><input type="checkbox" name="q1[]" value="Ausflüge"> Ausflüge</label>
-        <label class="option"><input type="checkbox" name="q1[]" value="Reise / Urlaub"> Reise / Urlaub</label>
-        <label class="option"><input type="checkbox" name="q1[]" value="organisierte Angebote"> organisierte Angebote</label>
-        <label class="option"><input type="checkbox" name="q1[]" value="etwas anderes"> etwas anderes</label>
-        <input type="text" name="q1_other" placeholder="Was?">
-      </fieldset>
-    </section>
+        <label class="option" for="de_q1_opt_home"><input type="checkbox" id="de_q1_opt_home" name="1_Aktivitaeten_Sommerferien[]" value="zu Hause"> zu Hause</label>
+<label class="option" for="de_q1_opt_playground"><input type="checkbox" id="de_q1_opt_playground" name="1_Aktivitaeten_Sommerferien[]" value="Spielplatz"> Spielplatz</label>
+<label class="option" for="de_q1_opt_friends"><input type="checkbox" id="de_q1_opt_friends" name="1_Aktivitaeten_Sommerferien[]" value="Freunde / Familie besucht"> Freunde / Familie besucht</label>
+<label class="option" for="de_q1_opt_swim"><input type="checkbox" id="de_q1_opt_swim" name="1_Aktivitaeten_Sommerferien[]" value="schwimmen / See"> schwimmen / See</label>
+<label class="option" for="de_q1_opt_trips"><input type="checkbox" id="de_q1_opt_trips" name="1_Aktivitaeten_Sommerferien[]" value="Ausflüge"> Ausflüge</label>
+<label class="option" for="de_q1_opt_travel"><input type="checkbox" id="de_q1_opt_travel" name="1_Aktivitaeten_Sommerferien[]" value="Reise / Urlaub"> Reise / Urlaub</label>
+<label class="option" for="de_q1_opt_organized"><input type="checkbox" id="de_q1_opt_organized" name="1_Aktivitaeten_Sommerferien[]" value="organisierte Angebote"> organisierte Angebote</label>
+<label class="option" for="de_q1_opt_other"><input type="checkbox" id="de_q1_opt_other" name="1_Aktivitaeten_Sommerferien[]" value="etwas anderes"> etwas anderes</label>
 
-    <section class="card"><fieldset>
-      <legend>2. Waren deine Kinder in den Ferien in der Sommerbetreuung (Schule, Kindergarten)?</legend>
-      <label class="option"><input type="radio" name="q2" value="Ja, 4-5 mal pro Woche"> Ja, 4–5 mal pro Woche</label>
-      <label class="option"><input type="radio" name="q2" value="Ja, 1-3 mal pro Woche"> Ja, 1–3 mal pro Woche</label>
-      <label class="option"><input type="radio" name="q2" value="Nein"> Nein</label>
-    </fieldset></section>
+        <input type="text" name="1_Sonstiges" placeholder="Was?">
+      </fieldset></section>
 
-    <section class="card"><fieldset>
-      <legend>3. Gehen deine Schulkinder ab nächster Woche in die Sommerschule?</legend>
-      <label class="option"><input type="radio" name="q3" value="Ja"> Ja</label>
-      <label class="option"><input type="radio" name="q3" value="Nein"> Nein</label>
-      <label class="option"><input type="radio" name="q3" value="Manche meiner Kinder"> Manche meiner Kinder</label>
-    </fieldset></section>
+      <section class="card"><fieldset>
+        <legend>2. Waren deine Kinder in den Ferien in der Sommerbetreuung (Schule, Kindergarten)?</legend>
+        <label class="option" for="de_q2_q2_a"><input type="radio" id="de_q2_q2_a" name="2_Sommerbetreuung" value="Ja, 4–5 mal pro Woche"> Ja, 4–5 mal pro Woche</label>
+<label class="option" for="de_q2_q2_b"><input type="radio" id="de_q2_q2_b" name="2_Sommerbetreuung" value="Ja, 1–3 mal pro Woche"> Ja, 1–3 mal pro Woche</label>
+<label class="option" for="de_q2_common_no"><input type="radio" id="de_q2_common_no" name="2_Sommerbetreuung" value="Nein"> Nein</label>
 
-    <section class="card"><fieldset>
-      <legend>4. Gab es Tage, an denen du gerne etwas mit deinen Kindern gemacht hättest, aber ihr seid zu Hause geblieben?</legend>
-      <label class="option"><input type="radio" name="q4" value="Ja"> Ja</label>
-      <label class="option"><input type="radio" name="q4" value="Nein"> Nein</label>
-      <textarea name="q4_why" placeholder="Wenn ja: Warum?"></textarea>
-    </fieldset></section>
+      </fieldset></section>
 
-    <section class="card"><fieldset>
-      <legend>5. Hat dich die Hitze an Aktivitäten im Freien gestört?</legend>
-      <label class="option"><input type="radio" name="q5" value="Ja"> Ja</label>
-      <label class="option"><input type="radio" name="q5" value="Nein"> Nein</label>
-    </fieldset></section>
+      <section class="card"><fieldset>
+        <legend>3. Gehen deine Schulkinder ab nächster Woche in die Sommerschule?</legend>
+        <label class="option" for="de_q3_common_yes"><input type="radio" id="de_q3_common_yes" name="3_Sommerschule" value="Ja"> Ja</label>
+<label class="option" for="de_q3_common_no"><input type="radio" id="de_q3_common_no" name="3_Sommerschule" value="Nein"> Nein</label>
+<label class="option" for="de_q3_q3_some"><input type="radio" id="de_q3_q3_some" name="3_Sommerschule" value="Manche meiner Kinder"> Manche meiner Kinder</label>
 
-    <section class="card"><fieldset>
-      <legend>6. Warst du wegen der Hitze öfters abends/nachts unterwegs mit den Kindern?</legend>
-      <label class="option"><input type="radio" name="q6" value="Ja"> Ja</label>
-      <label class="option"><input type="radio" name="q6" value="Nein"> Nein</label>
-    </fieldset></section>
+      </fieldset></section>
 
-    <section class="card"><fieldset>
-      <legend>7. Hast du in diesen Ferien selbst einen Ausflug mit deinen Kindern organisiert?</legend>
-      <label class="option"><input type="radio" name="q7" value="Ja"> Ja</label>
-      <label class="option"><input type="radio" name="q7" value="Nein"> Nein</label>
-      <input type="text" name="q7_where" placeholder="Wenn ja: Wohin?">
-    </fieldset></section>
+      <section class="card"><fieldset>
+        <legend>4. Gab es Tage, an denen du gerne etwas mit deinen Kindern gemacht hättest, aber ihr seid zu Hause geblieben?</legend>
+        <label class="option" for="de_q4_common_yes"><input type="radio" id="de_q4_common_yes" name="4_Wunsch_aber_zuhause_geblieben" value="Ja"> Ja</label>
+<label class="option" for="de_q4_common_no"><input type="radio" id="de_q4_common_no" name="4_Wunsch_aber_zuhause_geblieben" value="Nein"> Nein</label>
 
-    <section class="card"><fieldset>
-      <legend>8. Warum bist du heute bei unserem Ausflug dabei?</legend>
-      <textarea name="q8" placeholder="Mein wichtigster Grund"></textarea>
-    </fieldset></section>
+        <textarea name="4_Warum" placeholder="Wenn ja: Warum?"></textarea>
+      </fieldset></section>
 
-    <section class="card"><fieldset>
-      <legend>9. Wenn wir dir einen schönen Ort zeigen und erklären, wie du hinkommst: Gehst du später selbst mit deinen Kindern noch einmal dorthin?</legend>
-      <label class="option"><input type="radio" name="q9" value="Ja"> Ja</label>
-      <label class="option"><input type="radio" name="q9" value="Nein"> Nein</label>
-      <textarea name="q9_why" placeholder="Wenn nein: Warum nicht?"></textarea>
-    </fieldset></section>
+      <section class="card"><fieldset>
+        <legend>5. Hat dich die Hitze an Aktivitäten im Freien gestört?</legend>
+        <label class="option" for="de_q5_common_yes"><input type="radio" id="de_q5_common_yes" name="5_Hitze_gestoert" value="Ja"> Ja</label>
+<label class="option" for="de_q5_common_no"><input type="radio" id="de_q5_common_no" name="5_Hitze_gestoert" value="Nein"> Nein</label>
 
-    <section class="card privacy">
-      <strong>Hinweis zum Datenschutz</strong>
-      <p>Dieser Fragebogen fragt nicht nach Name, E-Mail-Adresse oder Telefonnummer. Die Antworten werden über einen E-Mail-Versanddienst (Web3Forms) an Regio Vorderland-Feldkirch übermittelt. Bitte keine persönlichen Daten in die freien Textfelder schreiben, wenn du anonym bleiben möchtest.</p>
-    </section>
+      </fieldset></section>
 
+      <section class="card"><fieldset>
+        <legend>6. Warst du wegen der Hitze öfters abends/nachts unterwegs mit den Kindern?</legend>
+        <label class="option" for="de_q6_common_yes"><input type="radio" id="de_q6_common_yes" name="6_Abends_nachts_unterwegs_wegen_Hitze" value="Ja"> Ja</label>
+<label class="option" for="de_q6_common_no"><input type="radio" id="de_q6_common_no" name="6_Abends_nachts_unterwegs_wegen_Hitze" value="Nein"> Nein</label>
+
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>7. Hast du in diesen Ferien selbst einen Ausflug mit deinen Kindern organisiert?</legend>
+        <label class="option" for="de_q7_common_yes"><input type="radio" id="de_q7_common_yes" name="7_Selbst_Ausflug_organisiert" value="Ja"> Ja</label>
+<label class="option" for="de_q7_common_no"><input type="radio" id="de_q7_common_no" name="7_Selbst_Ausflug_organisiert" value="Nein"> Nein</label>
+
+        <input type="text" name="7_Wohin" placeholder="Wenn ja: Wohin?">
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>8. Warum bist du heute bei unserem Ausflug dabei?</legend>
+        <textarea name="8_Warum_heute_dabei" placeholder="Mein wichtigster Grund"></textarea>
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>9. Wenn wir dir einen schönen Ort zeigen und erklären, wie du hinkommst: Gehst du später selbst mit deinen Kindern noch einmal dorthin?</legend>
+        <label class="option" for="de_q9_common_yes"><input type="radio" id="de_q9_common_yes" name="9_Nochmal_hingehen" value="Ja"> Ja</label>
+<label class="option" for="de_q9_common_no"><input type="radio" id="de_q9_common_no" name="9_Nochmal_hingehen" value="Nein"> Nein</label>
+
+        <textarea name="9_Warum_nicht" placeholder="Wenn nein: Warum nicht?"></textarea>
+      </fieldset></section>
+
+      <section class="card privacy">
+        <strong>Hinweis zum Datenschutz</strong>
+        <p>Dieser Fragebogen fragt nicht nach Name, E-Mail-Adresse oder Telefonnummer. Die Antworten werden über einen E-Mail-Versanddienst an Regio Vorderland-Feldkirch übermittelt. Bitte keine persönlichen Daten in die freien Textfelder schreiben, wenn du anonym bleiben möchtest.</p>
+      </section>
+
+      <section class="card">
+        <button type="submit" class="sendBtn" data-send="Wird gesendet …" data-submit="Antworten absenden">Antworten absenden</button>
+      </section>
+    </form>
+  </section>
+
+  <section class="lang-form" id="form-ps" dir="rtl" style="display:none">
     <section class="card">
-      <button type="submit" id="sendBtn">Antworten absenden</button>
+      <button type="button" class="backlink" onclick="showLangSelect()">← ژبه بدله کړئ</button>
+      <h1>د ۲۶.۰۸.۲۰۲۶ ګرځنده</h1>
+      <p class="lead"><strong>د ماشومانو لرونکو میندو لپاره لنډه پوښتنلیک</strong></p>
+      <p class="lead">موږ غواړو خپلې خدمتونه ښه کړو. تاسو کولی شئ زموږ سره مرسته وکړئ چې لاندې پوښتنو ته په لنډ او سمدستي ډول ځواب ووایاست. ډېره مننه.</p>
     </section>
-  </form>
+
+    <div class="status ok">مننه! ستاسو ځوابونه واستول شول.</div>
+    <div class="status err">د لیږلو پرمهال ستونزه رامنځته شوه. مهرباني وکړئ بیا هڅه وکړئ.</div>
+
+    <form class="fragebogen" method="post" accept-charset="UTF-8">
+      <input type="hidden" name="access_key" value="493089ac-5544-4f8e-814c-92dda388df05">
+      <input type="hidden" name="subject" value="Neue Antwort: Fragebogen Ausflug 26.08.2026">
+      <input type="hidden" name="from_name" value="Fragebogen Ausflug">
+      <input type="hidden" name="0_Sprache_gewaehlt" value="Paschtu">
+      <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+
+      <section class="card"><fieldset>
+        <legend>۱. تاسو په دې د اوړي رخصتیو کې ډېر څه کول؟</legend>
+        <label class="option" for="ps_q1_opt_home"><input type="checkbox" id="ps_q1_opt_home" name="1_Aktivitaeten_Sommerferien[]" value="په کور کې"> په کور کې</label>
+<label class="option" for="ps_q1_opt_playground"><input type="checkbox" id="ps_q1_opt_playground" name="1_Aktivitaeten_Sommerferien[]" value="لوبغالی"> لوبغالی</label>
+<label class="option" for="ps_q1_opt_friends"><input type="checkbox" id="ps_q1_opt_friends" name="1_Aktivitaeten_Sommerferien[]" value="له ملګرو / کورنۍ سره لیدنه"> له ملګرو / کورنۍ سره لیدنه</label>
+<label class="option" for="ps_q1_opt_swim"><input type="checkbox" id="ps_q1_opt_swim" name="1_Aktivitaeten_Sommerferien[]" value="لامبو / ډنډ"> لامبو / ډنډ</label>
+<label class="option" for="ps_q1_opt_trips"><input type="checkbox" id="ps_q1_opt_trips" name="1_Aktivitaeten_Sommerferien[]" value="ګرځنې"> ګرځنې</label>
+<label class="option" for="ps_q1_opt_travel"><input type="checkbox" id="ps_q1_opt_travel" name="1_Aktivitaeten_Sommerferien[]" value="سفر / رخصتي"> سفر / رخصتي</label>
+<label class="option" for="ps_q1_opt_organized"><input type="checkbox" id="ps_q1_opt_organized" name="1_Aktivitaeten_Sommerferien[]" value="تنظیم شوي فعالیتونه"> تنظیم شوي فعالیتونه</label>
+<label class="option" for="ps_q1_opt_other"><input type="checkbox" id="ps_q1_opt_other" name="1_Aktivitaeten_Sommerferien[]" value="بل څه"> بل څه</label>
+
+        <input type="text" name="1_Sonstiges" placeholder="څه شی؟">
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>۲. ایا ستاسو ماشومان د رخصتیو په جریان کې د اوړي پاملرنه (ښوونځی، کوچنیانو کوربالنه) کې وو؟</legend>
+        <label class="option" for="ps_q2_q2_a"><input type="radio" id="ps_q2_q2_a" name="2_Sommerbetreuung" value="هو، په اونۍ کې ۴-۵ ځله"> هو، په اونۍ کې ۴-۵ ځله</label>
+<label class="option" for="ps_q2_q2_b"><input type="radio" id="ps_q2_q2_b" name="2_Sommerbetreuung" value="هو، په اونۍ کې ۱-۳ ځله"> هو، په اونۍ کې ۱-۳ ځله</label>
+<label class="option" for="ps_q2_common_no"><input type="radio" id="ps_q2_common_no" name="2_Sommerbetreuung" value="نه"> نه</label>
+
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>۳. ایا ستاسو ښوونځي ماشومان له راتلونکې اونۍ نه د اوړي ښوونځي ته ځي؟</legend>
+        <label class="option" for="ps_q3_common_yes"><input type="radio" id="ps_q3_common_yes" name="3_Sommerschule" value="هو"> هو</label>
+<label class="option" for="ps_q3_common_no"><input type="radio" id="ps_q3_common_no" name="3_Sommerschule" value="نه"> نه</label>
+<label class="option" for="ps_q3_q3_some"><input type="radio" id="ps_q3_q3_some" name="3_Sommerschule" value="زما ځینې ماشومان"> زما ځینې ماشومان</label>
+
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>۴. ایا داسې ورځې وې چې تاسو غوښتل له خپلو ماشومانو سره یو څه وکړئ، خو تاسو په کور کې پاتې شوئ؟</legend>
+        <label class="option" for="ps_q4_common_yes"><input type="radio" id="ps_q4_common_yes" name="4_Wunsch_aber_zuhause_geblieben" value="هو"> هو</label>
+<label class="option" for="ps_q4_common_no"><input type="radio" id="ps_q4_common_no" name="4_Wunsch_aber_zuhause_geblieben" value="نه"> نه</label>
+
+        <textarea name="4_Warum" placeholder="که هو: ولې؟"></textarea>
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>۵. ایا ګرمۍ د بهرنیو فعالیتونو مخه ونیوله؟</legend>
+        <label class="option" for="ps_q5_common_yes"><input type="radio" id="ps_q5_common_yes" name="5_Hitze_gestoert" value="هو"> هو</label>
+<label class="option" for="ps_q5_common_no"><input type="radio" id="ps_q5_common_no" name="5_Hitze_gestoert" value="نه"> نه</label>
+
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>۶. ایا د ګرمۍ له امله تاسو له خپلو ماشومانو سره د ماښام/شپې په وخت کې ډېر بهر تلئ؟</legend>
+        <label class="option" for="ps_q6_common_yes"><input type="radio" id="ps_q6_common_yes" name="6_Abends_nachts_unterwegs_wegen_Hitze" value="هو"> هو</label>
+<label class="option" for="ps_q6_common_no"><input type="radio" id="ps_q6_common_no" name="6_Abends_nachts_unterwegs_wegen_Hitze" value="نه"> نه</label>
+
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>۷. ایا تاسو پخپله په دې رخصتیو کې له خپلو ماشومانو سره ګرځنده تنظیم کړې وه؟</legend>
+        <label class="option" for="ps_q7_common_yes"><input type="radio" id="ps_q7_common_yes" name="7_Selbst_Ausflug_organisiert" value="هو"> هو</label>
+<label class="option" for="ps_q7_common_no"><input type="radio" id="ps_q7_common_no" name="7_Selbst_Ausflug_organisiert" value="نه"> نه</label>
+
+        <input type="text" name="7_Wohin" placeholder="که هو: چېرته؟">
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>۸. ولې تاسو نن زموږ په ګرځنده کې ګډون کوئ؟</legend>
+        <textarea name="8_Warum_heute_dabei" placeholder="زما اصلي دلیل"></textarea>
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>۹. که موږ تاسو ته یو ښکلی ځای وښیو او تشریح یې کړو چې څنګه ورته ورسئ: ایا تاسو وروسته پخپله له خپلو ماشومانو سره بیا هغه ځای ته ځئ؟</legend>
+        <label class="option" for="ps_q9_common_yes"><input type="radio" id="ps_q9_common_yes" name="9_Nochmal_hingehen" value="هو"> هو</label>
+<label class="option" for="ps_q9_common_no"><input type="radio" id="ps_q9_common_no" name="9_Nochmal_hingehen" value="نه"> نه</label>
+
+        <textarea name="9_Warum_nicht" placeholder="که نه: ولې نه؟"></textarea>
+      </fieldset></section>
+
+      <section class="card privacy">
+        <strong>د محرمیت خبرتیا</strong>
+        <p>دا پوښتنلیک ستاسو نوم، بریښنالیک، یا د تلیفون شمیره نه پوښتي. ځوابونه د بریښنالیک خدمت له لارې Regio Vorderland-Feldkirch ته لیږل کیږي. که تاسو غواړئ ناشناس پاتې شئ، مهرباني وکړئ شخصي معلومات په خالي متن ساحو کې مه لیکئ.</p>
+      </section>
+
+      <section class="card">
+        <button type="submit" class="sendBtn" data-send="لیږل کیږي …" data-submit="ځوابونه واستوئ">ځوابونه واستوئ</button>
+      </section>
+    </form>
+  </section>
+
+  <section class="lang-form" id="form-ru" dir="ltr" style="display:none">
+    <section class="card">
+      <button type="button" class="backlink" onclick="showLangSelect()">← Сменить язык</button>
+      <h1>Поездка 26.08.2026</h1>
+      <p class="lead"><strong>Короткая анкета для мам с детьми</strong></p>
+      <p class="lead">Мы хотим улучшить наши услуги. Вы можете помочь нам, коротко и спонтанно ответив на следующие вопросы. Большое спасибо.</p>
+    </section>
+
+    <div class="status ok">Спасибо! Ваши ответы отправлены.</div>
+    <div class="status err">Произошла ошибка при отправке. Пожалуйста, попробуйте снова.</div>
+
+    <form class="fragebogen" method="post" accept-charset="UTF-8">
+      <input type="hidden" name="access_key" value="493089ac-5544-4f8e-814c-92dda388df05">
+      <input type="hidden" name="subject" value="Neue Antwort: Fragebogen Ausflug 26.08.2026">
+      <input type="hidden" name="from_name" value="Fragebogen Ausflug">
+      <input type="hidden" name="0_Sprache_gewaehlt" value="Russisch">
+      <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+
+      <section class="card"><fieldset>
+        <legend>1. Чем вы часто занимались этим летом на каникулах?</legend>
+        <label class="option" for="ru_q1_opt_home"><input type="checkbox" id="ru_q1_opt_home" name="1_Aktivitaeten_Sommerferien[]" value="дома"> дома</label>
+<label class="option" for="ru_q1_opt_playground"><input type="checkbox" id="ru_q1_opt_playground" name="1_Aktivitaeten_Sommerferien[]" value="детская площадка"> детская площадка</label>
+<label class="option" for="ru_q1_opt_friends"><input type="checkbox" id="ru_q1_opt_friends" name="1_Aktivitaeten_Sommerferien[]" value="посещали друзей / семью"> посещали друзей / семью</label>
+<label class="option" for="ru_q1_opt_swim"><input type="checkbox" id="ru_q1_opt_swim" name="1_Aktivitaeten_Sommerferien[]" value="купание / озеро"> купание / озеро</label>
+<label class="option" for="ru_q1_opt_trips"><input type="checkbox" id="ru_q1_opt_trips" name="1_Aktivitaeten_Sommerferien[]" value="поездки"> поездки</label>
+<label class="option" for="ru_q1_opt_travel"><input type="checkbox" id="ru_q1_opt_travel" name="1_Aktivitaeten_Sommerferien[]" value="путешествие / отпуск"> путешествие / отпуск</label>
+<label class="option" for="ru_q1_opt_organized"><input type="checkbox" id="ru_q1_opt_organized" name="1_Aktivitaeten_Sommerferien[]" value="организованные мероприятия"> организованные мероприятия</label>
+<label class="option" for="ru_q1_opt_other"><input type="checkbox" id="ru_q1_opt_other" name="1_Aktivitaeten_Sommerferien[]" value="что-то другое"> что-то другое</label>
+
+        <input type="text" name="1_Sonstiges" placeholder="Что именно?">
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>2. Были ли ваши дети на летнем присмотре (школа, детский сад) во время каникул?</legend>
+        <label class="option" for="ru_q2_q2_a"><input type="radio" id="ru_q2_q2_a" name="2_Sommerbetreuung" value="Да, 4–5 раз в неделю"> Да, 4–5 раз в неделю</label>
+<label class="option" for="ru_q2_q2_b"><input type="radio" id="ru_q2_q2_b" name="2_Sommerbetreuung" value="Да, 1–3 раза в неделю"> Да, 1–3 раза в неделю</label>
+<label class="option" for="ru_q2_common_no"><input type="radio" id="ru_q2_common_no" name="2_Sommerbetreuung" value="Нет"> Нет</label>
+
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>3. Пойдут ли ваши школьники на летнюю школу со следующей недели?</legend>
+        <label class="option" for="ru_q3_common_yes"><input type="radio" id="ru_q3_common_yes" name="3_Sommerschule" value="Да"> Да</label>
+<label class="option" for="ru_q3_common_no"><input type="radio" id="ru_q3_common_no" name="3_Sommerschule" value="Нет"> Нет</label>
+<label class="option" for="ru_q3_q3_some"><input type="radio" id="ru_q3_q3_some" name="3_Sommerschule" value="Некоторые из моих детей"> Некоторые из моих детей</label>
+
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>4. Были ли дни, когда вы хотели бы чем-то заняться с детьми, но остались дома?</legend>
+        <label class="option" for="ru_q4_common_yes"><input type="radio" id="ru_q4_common_yes" name="4_Wunsch_aber_zuhause_geblieben" value="Да"> Да</label>
+<label class="option" for="ru_q4_common_no"><input type="radio" id="ru_q4_common_no" name="4_Wunsch_aber_zuhause_geblieben" value="Нет"> Нет</label>
+
+        <textarea name="4_Warum" placeholder="Если да: почему?"></textarea>
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>5. Мешала ли жара занятиям на свежем воздухе?</legend>
+        <label class="option" for="ru_q5_common_yes"><input type="radio" id="ru_q5_common_yes" name="5_Hitze_gestoert" value="Да"> Да</label>
+<label class="option" for="ru_q5_common_no"><input type="radio" id="ru_q5_common_no" name="5_Hitze_gestoert" value="Нет"> Нет</label>
+
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>6. Из-за жары вы чаще гуляли с детьми вечером/ночью?</legend>
+        <label class="option" for="ru_q6_common_yes"><input type="radio" id="ru_q6_common_yes" name="6_Abends_nachts_unterwegs_wegen_Hitze" value="Да"> Да</label>
+<label class="option" for="ru_q6_common_no"><input type="radio" id="ru_q6_common_no" name="6_Abends_nachts_unterwegs_wegen_Hitze" value="Нет"> Нет</label>
+
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>7. Организовывали ли вы сами поездку с детьми в эти каникулы?</legend>
+        <label class="option" for="ru_q7_common_yes"><input type="radio" id="ru_q7_common_yes" name="7_Selbst_Ausflug_organisiert" value="Да"> Да</label>
+<label class="option" for="ru_q7_common_no"><input type="radio" id="ru_q7_common_no" name="7_Selbst_Ausflug_organisiert" value="Нет"> Нет</label>
+
+        <input type="text" name="7_Wohin" placeholder="Если да: куда?">
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>8. Почему вы сегодня участвуете в нашей поездке?</legend>
+        <textarea name="8_Warum_heute_dabei" placeholder="Моя главная причина"></textarea>
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>9. Если мы покажем вам красивое место и объясним, как туда добраться: пойдёте ли вы туда снова сами с детьми?</legend>
+        <label class="option" for="ru_q9_common_yes"><input type="radio" id="ru_q9_common_yes" name="9_Nochmal_hingehen" value="Да"> Да</label>
+<label class="option" for="ru_q9_common_no"><input type="radio" id="ru_q9_common_no" name="9_Nochmal_hingehen" value="Нет"> Нет</label>
+
+        <textarea name="9_Warum_nicht" placeholder="Если нет: почему нет?"></textarea>
+      </fieldset></section>
+
+      <section class="card privacy">
+        <strong>Уведомление о конфиденциальности</strong>
+        <p>Эта анкета не спрашивает ваше имя, адрес электронной почты или номер телефона. Ответы отправляются через сервис электронной почты в Regio Vorderland-Feldkirch. Пожалуйста, не пишите личные данные в свободных текстовых полях, если хотите остаться анонимными.</p>
+      </section>
+
+      <section class="card">
+        <button type="submit" class="sendBtn" data-send="Отправка …" data-submit="Отправить ответы">Отправить ответы</button>
+      </section>
+    </form>
+  </section>
+
+  <section class="lang-form" id="form-so" dir="ltr" style="display:none">
+    <section class="card">
+      <button type="button" class="backlink" onclick="showLangSelect()">← Beddel luqadda</button>
+      <h1>Safarka 26.08.2026</h1>
+      <p class="lead"><strong>Su&#x27;aalo gaagaaban oo loogu talagalay hooyooyinka carruurta leh</strong></p>
+      <p class="lead">Waxaan doonaynaa inaan hagaajino adeegyadeenna. Waxaad naga caawin kartaa adigoo si gaaban oo degdeg ah uga jawaabaya su&#x27;aalaha soo socda. Aad baad u mahadsan tahay.</p>
+    </section>
+
+    <div class="status ok">Mahadsanid! Jawaabahaaga waa la diray.</div>
+    <div class="status err">Dhib ayaa ka dhacay dirista. Fadlan mar kale isku day.</div>
+
+    <form class="fragebogen" method="post" accept-charset="UTF-8">
+      <input type="hidden" name="access_key" value="493089ac-5544-4f8e-814c-92dda388df05">
+      <input type="hidden" name="subject" value="Neue Antwort: Fragebogen Ausflug 26.08.2026">
+      <input type="hidden" name="from_name" value="Fragebogen Ausflug">
+      <input type="hidden" name="0_Sprache_gewaehlt" value="Somali">
+      <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+
+      <section class="card"><fieldset>
+        <legend>1. Maxaad inta badan samaysay xagaagan fasaxa dugsiga?</legend>
+        <label class="option" for="so_q1_opt_home"><input type="checkbox" id="so_q1_opt_home" name="1_Aktivitaeten_Sommerferien[]" value="guriga"> guriga</label>
+<label class="option" for="so_q1_opt_playground"><input type="checkbox" id="so_q1_opt_playground" name="1_Aktivitaeten_Sommerferien[]" value="goob ciyaareed"> goob ciyaareed</label>
+<label class="option" for="so_q1_opt_friends"><input type="checkbox" id="so_q1_opt_friends" name="1_Aktivitaeten_Sommerferien[]" value="booqasho saaxiibbo / qoyska"> booqasho saaxiibbo / qoyska</label>
+<label class="option" for="so_q1_opt_swim"><input type="checkbox" id="so_q1_opt_swim" name="1_Aktivitaeten_Sommerferien[]" value="dabaasho / haro"> dabaasho / haro</label>
+<label class="option" for="so_q1_opt_trips"><input type="checkbox" id="so_q1_opt_trips" name="1_Aktivitaeten_Sommerferien[]" value="safarro"> safarro</label>
+<label class="option" for="so_q1_opt_travel"><input type="checkbox" id="so_q1_opt_travel" name="1_Aktivitaeten_Sommerferien[]" value="safar / fasax"> safar / fasax</label>
+<label class="option" for="so_q1_opt_organized"><input type="checkbox" id="so_q1_opt_organized" name="1_Aktivitaeten_Sommerferien[]" value="hawlo la habeeyay"> hawlo la habeeyay</label>
+<label class="option" for="so_q1_opt_other"><input type="checkbox" id="so_q1_opt_other" name="1_Aktivitaeten_Sommerferien[]" value="wax kale"> wax kale</label>
+
+        <input type="text" name="1_Sonstiges" placeholder="Waa maxay?">
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>2. Carruurtaadu ma ku jireen daryeelka xagaaga (dugsiga, xanaanada) fasaxa?</legend>
+        <label class="option" for="so_q2_q2_a"><input type="radio" id="so_q2_q2_a" name="2_Sommerbetreuung" value="Haa, 4–5 jeer usbuucii"> Haa, 4–5 jeer usbuucii</label>
+<label class="option" for="so_q2_q2_b"><input type="radio" id="so_q2_q2_b" name="2_Sommerbetreuung" value="Haa, 1–3 jeer usbuucii"> Haa, 1–3 jeer usbuucii</label>
+<label class="option" for="so_q2_common_no"><input type="radio" id="so_q2_common_no" name="2_Sommerbetreuung" value="Maya"> Maya</label>
+
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>3. Carruurtaada dugsiga dhigata ma bilaabi doonaan dugsiga xagaaga usbuuca soo socda?</legend>
+        <label class="option" for="so_q3_common_yes"><input type="radio" id="so_q3_common_yes" name="3_Sommerschule" value="Haa"> Haa</label>
+<label class="option" for="so_q3_common_no"><input type="radio" id="so_q3_common_no" name="3_Sommerschule" value="Maya"> Maya</label>
+<label class="option" for="so_q3_q3_some"><input type="radio" id="so_q3_q3_some" name="3_Sommerschule" value="Qaar ka mid ah carruurtayda"> Qaar ka mid ah carruurtayda</label>
+
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>4. Ma jireen maalmo aad jeclaan lahayd inaad wax la samayso carruurtaada, laakiin aad guriga ku sii jirteen?</legend>
+        <label class="option" for="so_q4_common_yes"><input type="radio" id="so_q4_common_yes" name="4_Wunsch_aber_zuhause_geblieben" value="Haa"> Haa</label>
+<label class="option" for="so_q4_common_no"><input type="radio" id="so_q4_common_no" name="4_Wunsch_aber_zuhause_geblieben" value="Maya"> Maya</label>
+
+        <textarea name="4_Warum" placeholder="Haddii haa: Maxay tahay sababta?"></textarea>
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>5. Kulaylku ma carqaladeeyay hawlaha bannaanka?</legend>
+        <label class="option" for="so_q5_common_yes"><input type="radio" id="so_q5_common_yes" name="5_Hitze_gestoert" value="Haa"> Haa</label>
+<label class="option" for="so_q5_common_no"><input type="radio" id="so_q5_common_no" name="5_Hitze_gestoert" value="Maya"> Maya</label>
+
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>6. Kulaylka dartiis, ma ka badneyd inaad carruurtaada la baxdo fiidkii/habeenkii?</legend>
+        <label class="option" for="so_q6_common_yes"><input type="radio" id="so_q6_common_yes" name="6_Abends_nachts_unterwegs_wegen_Hitze" value="Haa"> Haa</label>
+<label class="option" for="so_q6_common_no"><input type="radio" id="so_q6_common_no" name="6_Abends_nachts_unterwegs_wegen_Hitze" value="Maya"> Maya</label>
+
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>7. Ma abaabushay adigu kaligaa safar aad la baxday carruurtaada fasaxaan?</legend>
+        <label class="option" for="so_q7_common_yes"><input type="radio" id="so_q7_common_yes" name="7_Selbst_Ausflug_organisiert" value="Haa"> Haa</label>
+<label class="option" for="so_q7_common_no"><input type="radio" id="so_q7_common_no" name="7_Selbst_Ausflug_organisiert" value="Maya"> Maya</label>
+
+        <input type="text" name="7_Wohin" placeholder="Haddii haa: Xaggee?">
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>8. Maxaad maanta ugu soo qaybgashay safarkeenna?</legend>
+        <textarea name="8_Warum_heute_dabei" placeholder="Sababta ugu muhiimsan"></textarea>
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>9. Haddaan ku tusno meel qurux badan oo aan kuu sharaxno sida loo gaaro: Ma dib ugu noqon lahayd goobta adigoo carruurtaada wata?</legend>
+        <label class="option" for="so_q9_common_yes"><input type="radio" id="so_q9_common_yes" name="9_Nochmal_hingehen" value="Haa"> Haa</label>
+<label class="option" for="so_q9_common_no"><input type="radio" id="so_q9_common_no" name="9_Nochmal_hingehen" value="Maya"> Maya</label>
+
+        <textarea name="9_Warum_nicht" placeholder="Haddii maya: Maxay tahay sababta?"></textarea>
+      </fieldset></section>
+
+      <section class="card privacy">
+        <strong>Ogeysiis ku saabsan asturnaanta</strong>
+        <p>Su&#x27;aalahan kuma weydiin magacaaga, cinwaanka email-ka ama lambarka taleefanka. Jawaabaha waxaa loo diraa adeeg email ah oo loo diro Regio Vorderland-Feldkirch. Fadlan ha qorin xog shakhsi ah goobaha qoraalka bilaashka ah haddii aad rabto inaad qarsoodi ahaato.</p>
+      </section>
+
+      <section class="card">
+        <button type="submit" class="sendBtn" data-send="Waa la dirayaa …" data-submit="Dir jawaabaha">Dir jawaabaha</button>
+      </section>
+    </form>
+  </section>
+
+  <section class="lang-form" id="form-uk" dir="ltr" style="display:none">
+    <section class="card">
+      <button type="button" class="backlink" onclick="showLangSelect()">← Змінити мову</button>
+      <h1>Поїздка 26.08.2026</h1>
+      <p class="lead"><strong>Коротка анкета для матерів з дітьми</strong></p>
+      <p class="lead">Ми хочемо покращити наші послуги. Ви можете допомогти нам, коротко та спонтанно відповівши на наступні запитання. Щиро дякуємо.</p>
+    </section>
+
+    <div class="status ok">Дякуємо! Ваші відповіді надіслано.</div>
+    <div class="status err">Виникла проблема під час надсилання. Спробуйте ще раз.</div>
+
+    <form class="fragebogen" method="post" accept-charset="UTF-8">
+      <input type="hidden" name="access_key" value="493089ac-5544-4f8e-814c-92dda388df05">
+      <input type="hidden" name="subject" value="Neue Antwort: Fragebogen Ausflug 26.08.2026">
+      <input type="hidden" name="from_name" value="Fragebogen Ausflug">
+      <input type="hidden" name="0_Sprache_gewaehlt" value="Ukrainisch">
+      <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+
+      <section class="card"><fieldset>
+        <legend>1. Чим ви часто займалися цими літніми канікулами?</legend>
+        <label class="option" for="uk_q1_opt_home"><input type="checkbox" id="uk_q1_opt_home" name="1_Aktivitaeten_Sommerferien[]" value="вдома"> вдома</label>
+<label class="option" for="uk_q1_opt_playground"><input type="checkbox" id="uk_q1_opt_playground" name="1_Aktivitaeten_Sommerferien[]" value="дитячий майданчик"> дитячий майданчик</label>
+<label class="option" for="uk_q1_opt_friends"><input type="checkbox" id="uk_q1_opt_friends" name="1_Aktivitaeten_Sommerferien[]" value="відвідували друзів / родину"> відвідували друзів / родину</label>
+<label class="option" for="uk_q1_opt_swim"><input type="checkbox" id="uk_q1_opt_swim" name="1_Aktivitaeten_Sommerferien[]" value="купання / озеро"> купання / озеро</label>
+<label class="option" for="uk_q1_opt_trips"><input type="checkbox" id="uk_q1_opt_trips" name="1_Aktivitaeten_Sommerferien[]" value="поїздки"> поїздки</label>
+<label class="option" for="uk_q1_opt_travel"><input type="checkbox" id="uk_q1_opt_travel" name="1_Aktivitaeten_Sommerferien[]" value="подорож / відпустка"> подорож / відпустка</label>
+<label class="option" for="uk_q1_opt_organized"><input type="checkbox" id="uk_q1_opt_organized" name="1_Aktivitaeten_Sommerferien[]" value="організовані заходи"> організовані заходи</label>
+<label class="option" for="uk_q1_opt_other"><input type="checkbox" id="uk_q1_opt_other" name="1_Aktivitaeten_Sommerferien[]" value="щось інше"> щось інше</label>
+
+        <input type="text" name="1_Sonstiges" placeholder="Що саме?">
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>2. Чи були ваші діти на літньому догляді (школа, дитячий садок) під час канікул?</legend>
+        <label class="option" for="uk_q2_q2_a"><input type="radio" id="uk_q2_q2_a" name="2_Sommerbetreuung" value="Так, 4–5 разів на тиждень"> Так, 4–5 разів на тиждень</label>
+<label class="option" for="uk_q2_q2_b"><input type="radio" id="uk_q2_q2_b" name="2_Sommerbetreuung" value="Так, 1–3 рази на тиждень"> Так, 1–3 рази на тиждень</label>
+<label class="option" for="uk_q2_common_no"><input type="radio" id="uk_q2_common_no" name="2_Sommerbetreuung" value="Ні"> Ні</label>
+
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>3. Чи підуть ваші школярі до літньої школи з наступного тижня?</legend>
+        <label class="option" for="uk_q3_common_yes"><input type="radio" id="uk_q3_common_yes" name="3_Sommerschule" value="Так"> Так</label>
+<label class="option" for="uk_q3_common_no"><input type="radio" id="uk_q3_common_no" name="3_Sommerschule" value="Ні"> Ні</label>
+<label class="option" for="uk_q3_q3_some"><input type="radio" id="uk_q3_q3_some" name="3_Sommerschule" value="Деякі з моїх дітей"> Деякі з моїх дітей</label>
+
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>4. Чи були дні, коли ви хотіли б чимось зайнятися з дітьми, але залишилися вдома?</legend>
+        <label class="option" for="uk_q4_common_yes"><input type="radio" id="uk_q4_common_yes" name="4_Wunsch_aber_zuhause_geblieben" value="Так"> Так</label>
+<label class="option" for="uk_q4_common_no"><input type="radio" id="uk_q4_common_no" name="4_Wunsch_aber_zuhause_geblieben" value="Ні"> Ні</label>
+
+        <textarea name="4_Warum" placeholder="Якщо так: чому?"></textarea>
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>5. Чи заважала спека заняттям на свіжому повітрі?</legend>
+        <label class="option" for="uk_q5_common_yes"><input type="radio" id="uk_q5_common_yes" name="5_Hitze_gestoert" value="Так"> Так</label>
+<label class="option" for="uk_q5_common_no"><input type="radio" id="uk_q5_common_no" name="5_Hitze_gestoert" value="Ні"> Ні</label>
+
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>6. Через спеку ви частіше гуляли з дітьми ввечері/вночі?</legend>
+        <label class="option" for="uk_q6_common_yes"><input type="radio" id="uk_q6_common_yes" name="6_Abends_nachts_unterwegs_wegen_Hitze" value="Так"> Так</label>
+<label class="option" for="uk_q6_common_no"><input type="radio" id="uk_q6_common_no" name="6_Abends_nachts_unterwegs_wegen_Hitze" value="Ні"> Ні</label>
+
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>7. Чи організовували ви самі поїздку з дітьми цими канікулами?</legend>
+        <label class="option" for="uk_q7_common_yes"><input type="radio" id="uk_q7_common_yes" name="7_Selbst_Ausflug_organisiert" value="Так"> Так</label>
+<label class="option" for="uk_q7_common_no"><input type="radio" id="uk_q7_common_no" name="7_Selbst_Ausflug_organisiert" value="Ні"> Ні</label>
+
+        <input type="text" name="7_Wohin" placeholder="Якщо так: куди?">
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>8. Чому ви сьогодні берете участь у нашій поїздці?</legend>
+        <textarea name="8_Warum_heute_dabei" placeholder="Моя головна причина"></textarea>
+      </fieldset></section>
+
+      <section class="card"><fieldset>
+        <legend>9. Якщо ми покажемо вам гарне місце і пояснимо, як туди дістатися: чи підете ви туди знову самі з дітьми?</legend>
+        <label class="option" for="uk_q9_common_yes"><input type="radio" id="uk_q9_common_yes" name="9_Nochmal_hingehen" value="Так"> Так</label>
+<label class="option" for="uk_q9_common_no"><input type="radio" id="uk_q9_common_no" name="9_Nochmal_hingehen" value="Ні"> Ні</label>
+
+        <textarea name="9_Warum_nicht" placeholder="Якщо ні: чому ні?"></textarea>
+      </fieldset></section>
+
+      <section class="card privacy">
+        <strong>Повідомлення про конфіденційність</strong>
+        <p>Ця анкета не запитує ваше ім&#x27;я, адресу електронної пошти чи номер телефону. Відповіді надсилаються через сервіс електронної пошти до Regio Vorderland-Feldkirch. Будь ласка, не пишіть особисті дані у вільних текстових полях, якщо хочете залишитися анонімними.</p>
+      </section>
+
+      <section class="card">
+        <button type="submit" class="sendBtn" data-send="Надсилання …" data-submit="Надіслати відповіді">Надіслати відповіді</button>
+      </section>
+    </form>
+  </section>
+
 </main>
+
 <script>
-  const form = document.getElementById('fragebogen');
-  const btn = document.getElementById('sendBtn');
-  const ok = document.getElementById('statusOk');
-  const err = document.getElementById('statusErr');
+  function showLangSelect() {
+    document.getElementById('langSelect').style.display = '';
+    document.querySelectorAll('.lang-form').forEach(function (el) { el.style.display = 'none'; });
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }
+  function showLang(code) {
+    document.getElementById('langSelect').style.display = 'none';
+    document.querySelectorAll('.lang-form').forEach(function (el) { el.style.display = 'none'; });
+    document.getElementById('form-' + code).style.display = '';
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }
 
-  form.addEventListener('submit', async function (e) {
-    e.preventDefault();
-    ok.classList.remove('show');
-    err.classList.remove('show');
-    btn.disabled = true;
-    btn.textContent = 'Wird gesendet …';
+  document.querySelectorAll('form.fragebogen').forEach(function (form) {
+    const section = form.closest('.lang-form');
+    const ok = section.querySelector('.status.ok');
+    const err = section.querySelector('.status.err');
+    const btn = form.querySelector('.sendBtn');
 
-    try {
-      const res = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: { 'Accept': 'application/json' },
-        body: new FormData(form)
-      });
-      const data = await res.json();
-      if (data.success) {
-        ok.classList.add('show');
-        form.reset();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else {
-        throw new Error(data.message || 'Fehler');
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      ok.classList.remove('show');
+      err.classList.remove('show');
+      btn.disabled = true;
+      btn.textContent = btn.getAttribute('data-send');
+
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Accept': 'application/json' },
+          body: new FormData(form)
+        });
+        const data = await res.json();
+        if (data.success) {
+          ok.classList.add('show');
+          form.reset();
+        } else {
+          throw new Error(data.message || 'Fehler');
+        }
+      } catch (e2) {
+        err.classList.add('show');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = btn.getAttribute('data-submit');
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
-    } catch (e2) {
-      err.classList.add('show');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } finally {
-      btn.disabled = false;
-      btn.textContent = 'Antworten absenden';
-    }
+    });
   });
 </script>
 </body>
