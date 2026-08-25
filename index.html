@@ -22,8 +22,9 @@
     button:disabled { opacity:.6; cursor:default; }
     .privacy { font-size:.92rem; line-height:1.45; }
     .status { display:none; border-radius:12px; padding:14px; margin:0 0 14px; font-size:1rem; }
-    .status.ok { display:block; background:#e1f3ea; color:#0f5132; }
-    .status.err { display:block; background:#fbeaea; color:#8a1f1f; }
+    .status.show { display:block; }
+    .status.ok { background:#e1f3ea; color:#0f5132; }
+    .status.err { background:#fbeaea; color:#8a1f1f; }
   </style>
 </head>
 <body>
@@ -127,8 +128,8 @@
 
   form.addEventListener('submit', async function (e) {
     e.preventDefault();
-    ok.style.display = 'none';
-    err.style.display = 'none';
+    ok.classList.remove('show');
+    err.classList.remove('show');
     btn.disabled = true;
     btn.textContent = 'Wird gesendet …';
 
@@ -140,14 +141,14 @@
       });
       const data = await res.json();
       if (data.success) {
-        ok.style.display = 'block';
+        ok.classList.add('show');
         form.reset();
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
         throw new Error(data.message || 'Fehler');
       }
     } catch (e2) {
-      err.style.display = 'block';
+      err.classList.add('show');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } finally {
       btn.disabled = false;
